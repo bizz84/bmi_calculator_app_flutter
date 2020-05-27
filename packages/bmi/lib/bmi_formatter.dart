@@ -1,4 +1,4 @@
-import 'package:intl/intl.dart';
+part of bmi;
 
 String formattedBmi(double bmi) {
   final formatter = NumberFormat('###.#');
