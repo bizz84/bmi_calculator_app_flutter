@@ -4,26 +4,26 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class BmiCalculationPage extends HookWidget {
   void _update({
-    ValueNotifier<TextEditingValue> widthController,
-    ValueNotifier<TextEditingValue> heightController,
-    ValueNotifier<TextEditingValue> bmiController,
+    required ValueNotifier<TextEditingValue> widthController,
+    required ValueNotifier<TextEditingValue> heightController,
+    ValueNotifier<TextEditingValue>? bmiController,
   }) {
     final weight = double.tryParse(widthController.value.text);
     final height = double.tryParse(heightController.value.text);
     if (weight != null && height != null) {
       final bmi = calculateBMI(weight, height);
       final formatted = formattedBmi(bmi);
-      bmiController.value = TextEditingValue(text: formatted);
+      bmiController!.value = TextEditingValue(text: formatted);
     } else {
-      bmiController.value = TextEditingValue(text: '');
+      bmiController!.value = TextEditingValue(text: '');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final weightController = useTextEditingController();
-    final heightController = useTextEditingController();
-    final bmiController = useTextEditingController();
+    final TextEditingController? weightController = useTextEditingController();
+    final TextEditingController? heightController = useTextEditingController();
+    final TextEditingController? bmiController = useTextEditingController();
     return Scaffold(
       appBar: AppBar(
         title: Text('BMI Calculator'),
@@ -37,8 +37,8 @@ class BmiCalculationPage extends HookWidget {
               decoration: InputDecoration(labelText: 'Weight (kg)'),
               keyboardType: TextInputType.number,
               onChanged: (_) => _update(
-                  widthController: weightController,
-                  heightController: heightController,
+                  widthController: weightController!,
+                  heightController: heightController!,
                   bmiController: bmiController),
               onEditingComplete: () => FocusScope.of(context).nextFocus(),
             ),
@@ -47,8 +47,8 @@ class BmiCalculationPage extends HookWidget {
               decoration: InputDecoration(labelText: 'Height (m)'),
               keyboardType: TextInputType.number,
               onChanged: (_) => _update(
-                  widthController: weightController,
-                  heightController: heightController,
+                  widthController: weightController!,
+                  heightController: heightController!,
                   bmiController: bmiController),
             ),
             TextField(
